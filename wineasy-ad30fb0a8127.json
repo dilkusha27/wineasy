@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "wineasy",
+  "private_key_id": "ad30fb0a8127b0c0369d40a6c8b3060aa8cfface",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCi+9YcMAr1nouo\nWSXBNNVq+86lWFLsqoNOsS87rgMemd6hGmn/x9BHUtxif4AG7Jz92NwIfql1cyWd\nxHf9QlNYvtV0j7L/tL/BQ55Q2oWo/FSa+B2G8Ac90NCKXXtZcw8fx0lYTcuQpwmC\nEhriNxCpYtcEw5gnKtkgYG/AmpSl+OuS3mYdJcOsFyPlq/aX2tTBvxKRY+bbmbrs\nueyLErGGXPnm374uHB6+M473zviR0fRh1H1RGATzZoHD8wBdUp0dSbcFP8qWfLXT\nblAF8412ZNW0qJeaQ7ryjeUL/6en2rmTE3DF5ArqHmUXyb9Z3su7BqFaGdR6QmbW\ngEIHv3FJAgMBAAECggEAD4MTikRCTsVDuoadkslyBIgpz0/cOJ0z+SHhAneZ4Wg4\nqbGnZApC9v7abd9/smkDuh9RNdfETiLi8iSYXPjakOg8zaa9nRu5Ym4Km9xoe0Bk\n1wkFWmnu7oG4z2p9SnKqflZL00U4OjDDtWb+uwgNpGl9WH07NoMb/jpfeH/d5Pvo\nkllqNl/zv2zfzSkaGTq5LJbgKPnZ/YPO4VtFOwmvzsCLQnDy747Y6J9ARqnPAMr+\nnXE+y5W/mAjDsg4PzSmiHGBi0H9jYLEKGCefLDColbB+xj/2E4Rd39Z5b5gqYYUi\nID+8Rj0o9ATPg+DPhqwL6pp8QMJeKsux5YFnK+PsWQKBgQDYDKZ40folpvfcv215\n4byMy/gPMOwlcai6LX90Hhl6oiosxHJlY0Kd4ouBiwcDB/kZK5h2SzrEsYPoE5wM\nq8RGkkfGDocufXaav0bl5YpPDTnjwSKWKIjFfGKOZ+kfX1wiOB5b/Ruj16M7oj5p\nd2+WIg1BXE8RJfsSW3Le4ZI9/QKBgQDBHymPRlyYkQJVff78AqYIIHWIz4w3ZRDQ\nmQ2WWm0FYGscTiYflFWIrYTCq5ev0wZ1NE+tRVWEem0rZUidFegV+8AU1t05cyfZ\n5VtsBbMbt0m/qiasCVzVUTeUCX+0JkkLvCaTtT/eRYbRBrefswxgW3TA3HX+XI3k\n28a0oEscPQKBgQC/KdJSrVhs4GQISskPQxGWcxO2PU91gjANLBzOHaPlwn8WxWuD\nEmTrVnyhzuYRZIigINbyNHZ3e6p/OnqlK4ar+trPACPUmubK3dxZptTORaGnSEjW\nHF+IfhqmboLzY2keThFuy3IdcrvYFCKtJyTw7ohUAN1lCvowsAHf/C9t8QKBgBhe\npFHuIRUnh1HeemS2uNjhr7M57Ym3+S05gxtsAcHh7uI9glYN09VRgCVInfWT/Yag\nuUU2MJptEIWfXFBmSUks4Yo/qt7rByZZ6PVyqq1erbG/+O1QqSRKAWdu42yKQEF4\n1q1g+9RClcaewGEoqPEn2U3VBBa6+zTb/vEgIRpJAoGAay2lHLSE60GXYgHTrPxp\n3vPVatDNmlHbF1cFgv8MJeTx4ztomdtKbNkRov+K7iZnDnf9WSQccs01zMlnYqpw\ndBsaiyWCBif2bMqoYkYxXzy3Xov+MuHisTqwyxO+fXtQGIphjww6llgw9RTs/+xv\n7q57aGgB+JTp/hYIGNTKGbk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "wineasy@wineasy.iam.gserviceaccount.com",
+  "client_id": "113714187184907304432",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/wineasy%40wineasy.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

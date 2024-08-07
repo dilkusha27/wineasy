@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./wine_label_reader_toolkit-master"
+    ]
+}
