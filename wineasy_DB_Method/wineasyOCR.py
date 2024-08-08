@@ -9,6 +9,7 @@ import numpy as np
 from paddleocr import PaddleOCR
 from .db.db import get_wine_detail_by_name  # db 모듈의 함수를 올바르게 임포트합니다
 from flask import Blueprint
+import os
 
 app = Flask(__name__)
 
@@ -47,10 +48,18 @@ def extract_text_from_image(image_bytes):
     
     # 이미지 전처리
     image = preprocess_image(image)
+
     # 이미지 크기 조정
     image = resize_image(image)
+    
     # 이미지 데이터를 numpy 배열로 변환
     image_np = np.array(image)
+
+    # 전처리된 이미지를 파일로 저장하여 확인
+    processed_image_path = 'static/downloads/processed_image.jpg'
+    Image.fromarray(image_np).save(processed_image_path)
+    logging.debug(f"Processed image saved at '{processed_image_path}'")
+
     # OCR을 사용하여 텍스트 인식
     result = ocr.ocr(image_np, cls=True)
 
@@ -68,14 +77,36 @@ wineasyOCR = Blueprint('wineasyOCR', __name__)
 
 @wineasyOCR.route('/process_image', methods=['POST'])
 def process_image():
-    data = request.get_json()
+
+    # 플러그인이 아니라 일반 엔티티로 받아서 처리하려고 데이터 어떻게 받아오는지 확인하는 과정
+    # 데이터를 잘 받아와도 로그는 전혀 표시되지 않음
+    """
+    logging.info("Entered process_image function")
+
+    raw_data = request.data.decode('utf-8')
+    logging.info(f"Received raw data: {raw_data}")
     
+    try:
+        data = request.get_json()
+        logging.info(f"Parsed JSON data: {json.dumps(data, indent=2)}")
+    except json.JSONDecodeError as e:
+        logging.error(f"JSON decode error: {str(e)}")
+        return jsonify({'error': 'Invalid JSON format'}), 400
+
+    if not data:
+        logging.error('No JSON data received')
+        return jsonify({'error': 'No JSON data received'}), 400
+    """
+        
+    data = request.get_json()
+        
     if 'action' in data and 'params' in data['action']:
         wine_image_data = data['action']['params'].get('wine_image')
         if wine_image_data:
             try:
                 # JSON 문자열 파싱
                 wine_image_json = json.loads(wine_image_data)
+                logging.debug(f"wine_image_json: {wine_image_json}")
                 
                 # secureUrls에서 URL 추출
                 secure_urls = wine_image_json.get('secureUrls')
@@ -83,31 +114,43 @@ def process_image():
                 if image_url_match:
                     image_url = image_url_match.group(0)
                     
+                    # 경로 설정
+                    download_folder = 'static/downloads'
+                    os.makedirs(download_folder, exist_ok=True)  # 폴더가 존재하지 않으면 생성
+
                     # 이미지 다운로드 및 처리
                     response = requests.get(image_url)
                     image_bytes = response.content
                     
+                    """
+                    image_path = os.path.join(download_folder, 'downloaded_image.jpg')
+                    logging.debug("Image downloaded successfully")
+
+                    with open(image_path, 'wb') as f:
+                        f.write(image_bytes)
+                    logging.debug(f"Image saved at '{image_path}'")              
+                    """
+                    
                     # 이미지에서 텍스트 추출
                     text_from_image = extract_text_from_image(image_bytes)
+                    logging.debug(f"Extracted text from image: {text_from_image}")
                     
                     if not text_from_image:
                         return jsonify({'error': 'No text detected'}), 400
                     
                     # 검출된 텍스트를 사용해 와인 정보 조회
                     wine_details = get_wine_detail_by_name(text_from_image)
+                    logging.debug(f"Retrieved wine details: {wine_details}")
                     
                     if wine_details:
                         wine = wine_details[0]
                         wine_type = wine['wine_type']
                         # 와인 타입에 따른 이모지 선택
-                        if wine_type == "Red":
-                            wine_emoji = "🍷"
-                        elif wine_type == "White":
-                            wine_emoji = "🥂"
-                        elif wine_type == "Sparkling":
-                            wine_emoji = "🍾"
-                        else:
-                            wine_emoji = "🍷"  # 기본값은 레드 와인 이모지
+                        wine_emoji = {
+                            "레드": "🍷",
+                            "화이트": "🥂",
+                            "스파클링": "🍾"
+                        }.get(wine_type, "🍷")  # 기본값은 레드 와인 이모지
                         
                         numbered_food_list = '\n'.join([f"{i+1}. {food.strip()}" for i, food in enumerate(wine['recommended_dish'].split(','))])
                         

@@ -7,7 +7,7 @@ app = Flask(__name__)
 wineasyTEXT = Blueprint('wineasyTEXT', __name__)
 
 @wineasyTEXT.route('/process_text', methods=['POST'])
-def text():
+def process_text():
     try:
         print("Request received")  # 요청이 도달했는지 확인
 
@@ -47,9 +47,9 @@ def text():
             
             # 와인 타입에 따른 이모지 선택
             wine_emoji = {
-                "Red": "🍷",
-                "White": "🥂",
-                "Sparkling": "🍾"
+                "레드": "🍷",
+                "화이트": "🥂",
+                "스파클링": "🍾"
             }.get(wine_type, "🍷")  # 기본값은 레드 와인 이모지
             
             numbered_food_list = '\n'.join([f"{i+1}. {food.strip()}" for i, food in enumerate(wine['recommended_dish'].split(','))])

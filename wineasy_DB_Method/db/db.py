@@ -1,6 +1,7 @@
 import mysql.connector
 import os
 from dotenv import load_dotenv
+import re
 
 load_dotenv()
 
@@ -12,15 +13,36 @@ def get_db_connection():
         database=os.getenv('DB_NAME')
     )
 
-def get_wine_detail_by_name(wine_name_en):
+
+def is_korean(text):
+    return bool(re.search('[\u3131-\uD79D]', text))
+
+def get_wine_detail_by_name(wine_name):
     conn = None
     try:
+        print("Connecting to the database...")
         conn = get_db_connection()
+        print("Connected to the database.")
+        
         cursor = conn.cursor()
-        query = "SELECT * FROM wine_detail WHERE wine_name_en LIKE %s"
-        cursor.execute(query, (f"%{wine_name_en}%",))
+        
+        # 입력된 이름이 한글인지 영어인지 판별
+        if is_korean(wine_name):
+            query = "SELECT * FROM wine_detail WHERE wine_name_ko LIKE %s"
+            params = (f"%{wine_name}%",)
+        else:
+            query = "SELECT * FROM wine_detail WHERE wine_name_en LIKE %s"
+            params = (f"%{wine_name}%",)
+
+        print(f"Executing query: {query} with parameter: {params}")
+
+        cursor.execute(query, params)
+        
         result = cursor.fetchall()
-        return [
+        print("Query executed successfully.")
+        print(f"Number of rows fetched: {len(result)}")
+        
+        wine_details = [
             {
                 'id': row[0],
                 'wine_name_ko': row[1],
@@ -36,9 +58,13 @@ def get_wine_detail_by_name(wine_name_en):
             }
             for row in result
         ]
+        print("Wine details processed successfully.")
+        return wine_details
     except mysql.connector.Error as err:
         print(f"Error: {err}")
         return None
     finally:
         if conn:
             conn.close()
+            print("Database connection closed.")
+
