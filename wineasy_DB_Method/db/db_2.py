@@ -13,12 +13,11 @@ def get_db_connection():
         database=os.getenv('DB_NAME')
     )
 
+
 def is_korean(text):
-    """Determine if the text contains Korean characters."""
     return bool(re.search('[\u3131-\uD79D]', text))
 
-def get_wine_info_by_name(wine_name):
-    """Fetch wine info by name with full-text search for English names or exact match for Korean names."""
+def get_wine_detail_by_name(wine_name):
     conn = None
     try:
         print("Connecting to the database...")
@@ -26,26 +25,14 @@ def get_wine_info_by_name(wine_name):
         print("Connected to the database.")
         
         cursor = conn.cursor()
-
+        
         # 입력된 이름이 한글인지 영어인지 판별
         if is_korean(wine_name):
-            query =  """
-                SELECT * 
-                FROM wines
-                WHERE MATCH(wine_name_ko) AGAINST (%s IN BOOLEAN MODE) 
-                ORDER BY MATCH(wine_name_ko) AGAINST (%s IN BOOLEAN MODE) DESC
-                LIMIT 1
-            """
-            params = (wine_name, wine_name)
+            query = "SELECT * FROM wine_detail WHERE wine_name_ko LIKE %s"
+            params = (f"%{wine_name}%",)
         else:
-            query = """
-                SELECT * 
-                FROM wines
-                WHERE MATCH(wine_name_en) AGAINST (%s IN BOOLEAN MODE) 
-                ORDER BY MATCH(wine_name_en) AGAINST (%s IN BOOLEAN MODE) DESC
-                LIMIT 1
-            """
-            params = (wine_name, wine_name)
+            query = "SELECT * FROM wine_detail WHERE wine_name_en LIKE %s"
+            params = (f"%{wine_name}%",)
 
         print(f"Executing query: {query} with parameter: {params}")
 
@@ -60,10 +47,10 @@ def get_wine_info_by_name(wine_name):
                 'id': row[0],
                 'wine_name_ko': row[1],
                 'wine_name_en': row[2],
-                'wine_type': row[3],
-                'country': row[4],
-                'recommended_dish': row[5],
-                'taste': row[6],
+                'country': row[3],
+                'recommended_dish': row[4],
+                'taste': row[5],
+                'wine_type': row[6],
                 'wine_sweet': row[7],
                 'wine_body': row[8],
                 'wine_acidity': row[9],
@@ -80,3 +67,4 @@ def get_wine_info_by_name(wine_name):
         if conn:
             conn.close()
             print("Database connection closed.")
+
