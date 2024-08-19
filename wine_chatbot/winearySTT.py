@@ -8,7 +8,7 @@ from wineasyTEXT import process_text
 import re
 
 # 음성 파일 경로 설정 및 초기화
-file_path="E:/workplace/wineasy/wineasy_1.2/kakao_skill/ttsFole.mp3"
+file_path="E:/workplace/wineasy/wineasy_1.2.1/kakao_skill/ttsFole.mp3"
 if os.path.exists(file_path):
     os.remove(file_path)  # 기존 음성 파일이 있으면 삭제
 fileName=file_path

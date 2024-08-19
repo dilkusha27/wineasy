@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, request
 import requests
 import subprocess
-from blueprints.upload import upload_bp
 from wineasyOCR import wineasyOCR
 from wineasyTEXT import wineasyTEXT
 import webbrowser
@@ -9,7 +8,6 @@ import os
 import time
 
 app = Flask(__name__)
-app.register_blueprint(upload_bp)
 app.register_blueprint(wineasyOCR)
 app.register_blueprint(wineasyTEXT)
     
